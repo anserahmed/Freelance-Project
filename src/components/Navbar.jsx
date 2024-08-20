@@ -1,124 +1,262 @@
-import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import logoo from "../assets/logoo.png";
+import React, { useRef } from "react";
+import "remixicon/fonts/remixicon.css";
+import { Link } from "react-router-dom";
+import logo from "../assets/logo.png";
 
+function Navigation() {
+  const navDialogeRef = useRef(null);
 
-const navigation = [
-  { name: 'Home', href: '#', current: false },
-  { name: 'Products', href: '#products', current: false },
-  { name: 'About', href: '#about', current: false },
-]
+  function handleMenu() {
+    if (navDialogeRef.current) {
+      navDialogeRef.current.classList.toggle("hidden");
+    }
+  }
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
-
-export default function Navbar() {
   return (
-    <Disclosure as="nav" className="bg-gradient-to-r  text-center justify-center from-gray-800 via-gray-600 to-gray-800  myfont  z-40 shadow-md w-full top-0 fixed backdrop-blur-[15px] backdrop-saturate-[150%]">
-      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-        <div className="relative flex h-20 items-center justify-between">
-          <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-            {/* Mobile menu button*/}
-            <DisclosureButton className="group relative inline-flex items-center  border-none justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-              <span className="absolute -inset-0.5" />
-              {/* <span className="sr-only">Open main menu</span> */}
-              <Bars3Icon aria-hidden="true" className="block h-5 w-5 group-data-[open]:hidden " />
-              <XMarkIcon aria-hidden="true" className="hidden h-5 w-5 group-data-[open]:block " />
-            </DisclosureButton>
-          </div>
-          <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-            <div className="flex flex-shrink-0 items-center">
-              <img
-                alt="Ramen"
-                src={logoo}
-                className="h-16 w-auto"
-              />
+    <>
+      <section className="z-40 w-full bg-slate-100 backdrop-blur-sm shadow-lg p-2 relative">
+        <nav className="flex justify-between px-2 items-center">
+          <div className="flex justify-center items-center gap-4">
+            <div className="h-[10vh] w-[10vh]  ">
+              <img className="h-[100%] w-[100%]" src={logo} alt="logo" />
             </div>
-            <div className="hidden sm:ml-16 sm:block">
-              <div className="flex space-x-4">
-                {navigation.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    aria-current={item.current ? 'page' : undefined}
-                    className={classNames(
-                      item.current ? ' text-white' : 'hover:text-white text-gray-200',
-                      'rounded-md px-3 py-6 text-base myfont ',
-                    )}
-                  >
-                    {item.name}
-                  </a>
-                ))}
+            <h1 className="hidden sm:block text-3xl font-semibold  sm:text-left ">
+              Rastriya Mukti Kranti
+            </h1>
+          </div>
+
+          {/* Bada navbar (Upper navbar)  */}
+          <div className="md:flex  text-sm font-bold items-center hidden justify-between gap-7">
+            <Link to="/">
+              <h4 className="text-blue-500 hover:text-orange-400 transition ease-in">
+                UPCOMING EVENTS
+              </h4>
+            </Link>
+
+            <Link to="/contact">
+              <h4 className=" text-blue-500  hover:text-orange-400  transition ease-in">
+                RKM <span className="text-green-500">LIVE</span>
+              </h4>
+            </Link>
+            <Link to="/contact">
+              <h4 className=" text-blue-500 hover:text-orange-400 transition ease-in">
+                RESOURCES
+              </h4>
+            </Link>
+
+            <div className="flex justify-center items-center gap-2">
+              <Link to="/join">
+                <button className="bg-orange-400 hover:bg-orange-500 transition ease-in  rounded-md text-white px-6 py-1 ">
+                  Join
+                </button>
+              </Link>
+              <Link to="/donate">
+                <button className="bg-orange-400 hover:bg-red-500  transition ease-in  rounded-md text-white  px-3 py-1 ">
+                  Donate
+                </button>
+              </Link>
+            </div>
+          </div>
+
+          <button onClick={handleMenu}>
+            <svg
+              className="h-8 w-8   text-gray-900"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </button>
+
+          {/* Navbar Chota wala (Side View) */}
+
+          <div
+            ref={navDialogeRef}
+            className="transition pt-6 hidden ease-in sm-menu bg-white fixed z-20 px-4 py-3 h-screen w-screen right-0 top-0"
+          >
+            <div className="flex font-bold justify-between items-center">
+              <h1 className="text-orange-500 text-3xl px-6 ">R M K</h1>
+
+              <button onClick={handleMenu}>
+                <svg
+                  className="h-8 w-8 text-gray-900"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Links */}
+            <div className="flex flex-col justify-between  gap-5">
+              <div className="flex flex-col  justify-between min-h-[80vh]">
+                <div className="mt-10 text-md font-semibold flex flex-col w-full gap-2 px-0">
+                  <div className="w-full rounded bg-emerald-500 shadow-md items-center hover:bg-emerald-600 text-gray-100 hover:text-green-100 py-1 flex">
+                    <button className="w-full" onClick={handleMenu}>
+                      <Link className="w-full flex justify-center" to="/">
+                        <h4 className=" hover:text-gray-100">Infographics</h4>
+                      </Link>
+                    </button>
+                  </div>
+
+                  <div className="w-full rounded bg-blue-800 hover:bg-blue-900 text-gray-100 py-1 shadow-md  items-center flex">
+                    <button className="w-full" onClick={handleMenu}>
+                      <Link
+                        className="w-full flex justify-center"
+                        to="/contact"
+                      >
+                        <h4 className=" ">My RMK</h4>
+                      </Link>
+                    </button>
+                  </div>
+
+                  <div className="w-full rounded bg-purple-800 hover:bg-purple-900 text-gray-100 shadow-md py-1  items-center flex">
+                    <button className="w-full" onClick={handleMenu}>
+                      <Link
+                        className="w-full flex justify-center"
+                        to="/contact"
+                      >
+                        <h4 className=" ">State Websites</h4>
+                      </Link>
+                    </button>
+                  </div>
+
+                  <div className="w-full rounded bg-orange-500 text-white  hover:bg-orange-600 shadow-md py-1 items-center flex">
+                    <button className="w-full" onClick={handleMenu}>
+                      <Link className="w-full flex justify-center" to="/join">
+                        <h4 className=" ">Join RMK</h4>
+                      </Link>
+                    </button>
+                  </div>
+
+                  <div className="w-full rounded bg-orange-400 text-white  hover:bg-orange-500 shadow-md py-1 items-center flex">
+                    <button className="w-full" onClick={handleMenu}>
+                      <Link className="w-full flex justify-center" to="/donate">
+                        <h4 className=" ">Make a Donation</h4>
+                      </Link>
+                    </button>
+                  </div>
+
+                  <div className="w-full rounded bg-cyan-400 text-white  hover:bg-cyan-600 py-1 shadow-md items-center flex">
+                    <button className="w-full" onClick={handleMenu}>
+                      <Link className="w-full flex justify-center" to="/join">
+                        <h4 className=" ">Archive</h4>
+                      </Link>
+                    </button>
+                  </div>
+                  <div className="w-full rounded  hover:bg-orange-500 text-white bg-orange-400 shadow-md py-1 items-center flex">
+                    <button className="w-full" onClick={handleMenu}>
+                      <Link className="w-full flex justify-center" to="/join">
+                        <h4 className=" ">RMK Yatra</h4>
+                      </Link>
+                    </button>
+                  </div>
+
+                  <div className="w-full rounded  hover:bg-green-600 text-white bg-green-500 shadow-md py-1 items-center flex">
+                    <button className="w-full" onClick={handleMenu}>
+                      <Link className="w-full flex justify-center" to="/join">
+                        <h4 className=" ">Election Corner</h4>
+                      </Link>
+                    </button>
+                  </div>
+                  <div className="w-full rounded bg-purple-900 text-white  hover:bg-purple-950 py-1 items-center flex">
+                    <button className="w-full" onClick={handleMenu}>
+                      <Link className="w-full flex justify-center" to="/join">
+                        <h4 className=" ">RMK Live</h4>
+                      </Link>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* footer (contacts) */}
+
+              <div className="flex relative flex-end font-bold gap-2  justify-center items-center h-[10vh] bottom-0 ">
+                <div>
+                  <h3>Connect with us :</h3>
+                </div>
+                <div className="flex justify-start gap-2 items-center">
+                  <h3>
+                    <svg
+                      class="h-5 w-5 text-blue-500"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      {" "}
+                      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                    </svg>
+                  </h3>
+                  <h3>
+                    <svg
+                      class="h-5 w-5 text-sky-500"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      {" "}
+                      <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" />
+                    </svg>
+                  </h3>
+                  <h3>
+                    <svg
+                      class="h-5 w-5 text-red-500"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      {" "}
+                      <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />{" "}
+                      <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
+                    </svg>
+                  </h3>
+                  <h3>
+                    <svg
+                      class="h-5 w-5 text-neutral-600"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      {" "}
+                      <circle cx="18" cy="5" r="3" />{" "}
+                      <circle cx="6" cy="12" r="3" />{" "}
+                      <circle cx="18" cy="19" r="3" />{" "}
+                      <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />{" "}
+                      <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                    </svg>
+                  </h3>
+                </div>
               </div>
             </div>
           </div>
-          {/* <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <button
-              type="button"
-              className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-            >
-              <span className="absolute -inset-1.5" />
-              <span className="sr-only">View notifications</span>
-              <BellIcon aria-hidden="true" className="h-6 w-6" />
-            </button>
-
-            Profile dropdown
-            <Menu as="div" className="relative ml-3">
-              <div>
-                <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                  <span className="absolute -inset-1.5" />
-                  <span className="sr-only">Open user menu</span>
-                  <img
-                    alt=""
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    className="h-8 w-8 rounded-full"
-                  />
-                </MenuButton>
-              </div>
-              <MenuItems
-                transition
-                className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
-              >
-                <MenuItem>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
-                    Your Profile
-                  </a>
-                </MenuItem>
-                <MenuItem>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
-                    Settings
-                  </a>
-                </MenuItem>
-                <MenuItem>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
-                    Sign out
-                  </a>
-                </MenuItem>
-              </MenuItems>
-            </Menu>
-          </div> */}
-        </div>
-      </div>
-
-      <DisclosurePanel className="sm:hidden border-none border-0">
-        <div className="space-y-1 px-2 pb-3 pt-2">
-          {navigation.map((item) => (
-            <DisclosureButton
-              key={item.name}
-              as="a"
-              href={item.href}
-              aria-current={item.current ? 'page' : undefined}
-              className={classNames(
-                item.current ? ' text-white' : 'text-white hover:text-gray-800',
-                'block rounded-md px-3 py-2 text-base myfont',
-              )}
-            >
-              {item.name}
-            </DisclosureButton>
-          ))}
-        </div>
-      </DisclosurePanel>
-    </Disclosure>
-  )
+        </nav>
+      </section>
+    </>
+  );
 }
+
+export default Navigation;
